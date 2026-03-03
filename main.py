@@ -18,7 +18,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://military-dashboard-six.vercel.app",
+        "shopelite-frontend.vercel.app",
     ],
     allow_origin_regex=r"http://localhost:\d+",
     allow_credentials=True,
