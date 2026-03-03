@@ -18,7 +18,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "shopelite-frontend.vercel.app",
+        "https://shopelite-frontend.vercel.app/",
     ],
     allow_origin_regex=r"http://localhost:\d+",
     allow_credentials=True,
