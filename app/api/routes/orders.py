@@ -170,15 +170,48 @@ def update_order_status(
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
 
-    order.status = data.status
+    STATUS_TO_IDX = {
+        "order_placed":    0,
+        "processing":      1,
+        "shipped":         2,
+        "out_for_delivery": 3,
+        "delivered":       4,
+        "Order Placed":    0,
+        "Processing":      1,
+        "Shipped":         2,
+        "Out for Delivery": 3,
+        "Delivered":       4,
+    }
 
-    status_map = {"processing": 1, "shipped": 2, "delivered": 4}
-    tracking   = order.tracking or []
-    idx        = status_map.get(data.status.value if hasattr(data.status, 'value') else data.status)
-    if idx and idx < len(tracking):
-        tracking[idx]["done"] = True
-        tracking[idx]["date"] = datetime.utcnow().isoformat()
+    new_status = data.status.value if hasattr(data.status, 'value') else data.status
+    new_idx    = STATUS_TO_IDX.get(new_status)
+
+    if new_idx is None:
+        raise HTTPException(status_code=400, detail=f"Unknown status: {new_status}")
+
+    tracking = list(order.tracking or [])
+    current_idx = -1
+    for i, step in enumerate(tracking):
+        if step.get("done"):
+            current_idx = i
+
+    if new_idx <= current_idx:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Cannot move order backwards. Current step: {current_idx}, requested: {new_idx}"
+        )
+
+    now = datetime.utcnow().isoformat()
+    for i in range(current_idx + 1, new_idx + 1):
+        if i < len(tracking):
+            tracking[i]["done"] = True
+            tracking[i]["date"] = now
+
     order.tracking = tracking
+    order.status   = new_status
+
+    from sqlalchemy.orm.attributes import flag_modified
+    flag_modified(order, "tracking")
 
     db.commit()
     db.refresh(order)

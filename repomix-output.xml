@@ -1,0 +1,2311 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+alembic.ini
+alembic/env.py
+alembic/README
+alembic/script.py.mako
+alembic/versions/da3b83fae993_initial_tables.py
+app/api/deps.py
+app/api/routes/analytics.py
+app/api/routes/auth.py
+app/api/routes/categories.py
+app/api/routes/orders.py
+app/api/routes/products.py
+app/api/routes/users.py
+app/core/config.py
+app/core/database.py
+app/core/security.py
+app/crud/category.py
+app/crud/order.py
+app/crud/product.py
+app/crud/user.py
+app/models/order.py
+app/models/product.py
+app/models/user.py
+app/schemas/auth.py
+app/schemas/category.py
+app/schemas/order.py
+app/schemas/product.py
+app/schemas/user.py
+gitignore
+main.py
+requirements.txt
+seed.py
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="alembic.ini">
+# A generic, single database configuration.
+
+[alembic]
+# path to migration scripts.
+# this is typically a path given in POSIX (e.g. forward slashes)
+# format, relative to the token %(here)s which refers to the location of this
+# ini file
+script_location = %(here)s/alembic
+
+# template used to generate migration file names; The default value is %%(rev)s_%%(slug)s
+# Uncomment the line below if you want the files to be prepended with date and time
+# see https://alembic.sqlalchemy.org/en/latest/tutorial.html#editing-the-ini-file
+# for all available tokens
+# file_template = %%(year)d_%%(month).2d_%%(day).2d_%%(hour).2d%%(minute).2d-%%(rev)s_%%(slug)s
+# Or organize into date-based subdirectories (requires recursive_version_locations = true)
+# file_template = %%(year)d/%%(month).2d/%%(day).2d_%%(hour).2d%%(minute).2d_%%(second).2d_%%(rev)s_%%(slug)s
+
+# sys.path path, will be prepended to sys.path if present.
+# defaults to the current working directory.  for multiple paths, the path separator
+# is defined by "path_separator" below.
+prepend_sys_path = .
+
+
+# timezone to use when rendering the date within the migration file
+# as well as the filename.
+# If specified, requires the tzdata library which can be installed by adding
+# `alembic[tz]` to the pip requirements.
+# string value is passed to ZoneInfo()
+# leave blank for localtime
+# timezone =
+
+# max length of characters to apply to the "slug" field
+# truncate_slug_length = 40
+
+# set to 'true' to run the environment during
+# the 'revision' command, regardless of autogenerate
+# revision_environment = false
+
+# set to 'true' to allow .pyc and .pyo files without
+# a source .py file to be detected as revisions in the
+# versions/ directory
+# sourceless = false
+
+# version location specification; This defaults
+# to <script_location>/versions.  When using multiple version
+# directories, initial revisions must be specified with --version-path.
+# The path separator used here should be the separator specified by "path_separator"
+# below.
+# version_locations = %(here)s/bar:%(here)s/bat:%(here)s/alembic/versions
+
+# path_separator; This indicates what character is used to split lists of file
+# paths, including version_locations and prepend_sys_path within configparser
+# files such as alembic.ini.
+# The default rendered in new alembic.ini files is "os", which uses os.pathsep
+# to provide os-dependent path splitting.
+#
+# Note that in order to support legacy alembic.ini files, this default does NOT
+# take place if path_separator is not present in alembic.ini.  If this
+# option is omitted entirely, fallback logic is as follows:
+#
+# 1. Parsing of the version_locations option falls back to using the legacy
+#    "version_path_separator" key, which if absent then falls back to the legacy
+#    behavior of splitting on spaces and/or commas.
+# 2. Parsing of the prepend_sys_path option falls back to the legacy
+#    behavior of splitting on spaces, commas, or colons.
+#
+# Valid values for path_separator are:
+#
+# path_separator = :
+# path_separator = ;
+# path_separator = space
+# path_separator = newline
+#
+# Use os.pathsep. Default configuration used for new projects.
+path_separator = os
+
+# set to 'true' to search source files recursively
+# in each "version_locations" directory
+# new in Alembic version 1.10
+# recursive_version_locations = false
+
+# the output encoding used when revision files
+# are written from script.py.mako
+# output_encoding = utf-8
+
+# database URL.  This is consumed by the user-maintained env.py script only.
+# other means of configuring database URLs may be customized within the env.py
+# file.
+sqlalchemy.url = driver://user:pass@localhost/dbname
+
+
+[post_write_hooks]
+# post_write_hooks defines scripts or Python functions that are run
+# on newly generated revision scripts.  See the documentation for further
+# detail and examples
+
+# format using "black" - use the console_scripts runner, against the "black" entrypoint
+# hooks = black
+# black.type = console_scripts
+# black.entrypoint = black
+# black.options = -l 79 REVISION_SCRIPT_FILENAME
+
+# lint with attempts to fix using "ruff" - use the module runner, against the "ruff" module
+# hooks = ruff
+# ruff.type = module
+# ruff.module = ruff
+# ruff.options = check --fix REVISION_SCRIPT_FILENAME
+
+# Alternatively, use the exec runner to execute a binary found on your PATH
+# hooks = ruff
+# ruff.type = exec
+# ruff.executable = ruff
+# ruff.options = check --fix REVISION_SCRIPT_FILENAME
+
+# Logging configuration.  This is also consumed by the user-maintained
+# env.py script only.
+[loggers]
+keys = root,sqlalchemy,alembic
+
+[handlers]
+keys = console
+
+[formatters]
+keys = generic
+
+[logger_root]
+level = WARNING
+handlers = console
+qualname =
+
+[logger_sqlalchemy]
+level = WARNING
+handlers =
+qualname = sqlalchemy.engine
+
+[logger_alembic]
+level = INFO
+handlers =
+qualname = alembic
+
+[handler_console]
+class = StreamHandler
+args = (sys.stderr,)
+level = NOTSET
+formatter = generic
+
+[formatter_generic]
+format = %(levelname)-5.5s [%(name)s] %(message)s
+datefmt = %H:%M:%S
+</file>
+
+<file path="alembic/env.py">
+import sys, os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from logging.config import fileConfig
+from sqlalchemy import engine_from_config, pool
+from alembic import context
+
+from app.core.config import settings
+from app.core.database import Base
+from app.models.user     import User
+from app.models.product  import Product
+from app.models.product import Category
+from app.models.order    import Order, OrderItem, Address, CartItem, Wishlist
+
+config = context.config
+fileConfig(config.config_file_name)
+
+target_metadata = Base.metadata
+
+# ── Force set URL directly from settings ─────────────────────────────────────
+migration_url = settings.DATABASE_MIGRATION_URL or settings.DATABASE_URL
+config.set_main_option("sqlalchemy.url", migration_url)
+
+
+def run_migrations_offline():
+    url = config.get_main_option("sqlalchemy.url")
+    context.configure(
+        url=url,
+        target_metadata=target_metadata,
+        literal_binds=True,
+        dialect_opts={"paramstyle": "named"},
+    )
+    with context.begin_transaction():
+        context.run_migrations()
+
+
+def run_migrations_online():
+    from sqlalchemy import create_engine
+    connectable = create_engine(
+        migration_url,
+        poolclass=pool.NullPool,
+    )
+    with connectable.connect() as connection:
+        context.configure(
+            connection=connection,
+            target_metadata=target_metadata,
+            compare_type=True,
+        )
+        with context.begin_transaction():
+            context.run_migrations()
+
+
+if context.is_offline_mode():
+    run_migrations_offline()
+else:
+    run_migrations_online()
+</file>
+
+<file path="alembic/README">
+Generic single-database configuration.
+</file>
+
+<file path="alembic/script.py.mako">
+"""${message}
+
+Revision ID: ${up_revision}
+Revises: ${down_revision | comma,n}
+Create Date: ${create_date}
+
+"""
+from typing import Sequence, Union
+
+from alembic import op
+import sqlalchemy as sa
+${imports if imports else ""}
+
+# revision identifiers, used by Alembic.
+revision: str = ${repr(up_revision)}
+down_revision: Union[str, Sequence[str], None] = ${repr(down_revision)}
+branch_labels: Union[str, Sequence[str], None] = ${repr(branch_labels)}
+depends_on: Union[str, Sequence[str], None] = ${repr(depends_on)}
+
+
+def upgrade() -> None:
+    """Upgrade schema."""
+    ${upgrades if upgrades else "pass"}
+
+
+def downgrade() -> None:
+    """Downgrade schema."""
+    ${downgrades if downgrades else "pass"}
+</file>
+
+<file path="alembic/versions/da3b83fae993_initial_tables.py">
+"""initial tables
+
+Revision ID: da3b83fae993
+Revises: 
+Create Date: 2026-02-28 12:31:52.693813
+
+"""
+from typing import Sequence, Union
+
+from alembic import op
+import sqlalchemy as sa
+
+
+# revision identifiers, used by Alembic.
+revision: str = 'da3b83fae993'
+down_revision: Union[str, Sequence[str], None] = None
+branch_labels: Union[str, Sequence[str], None] = None
+depends_on: Union[str, Sequence[str], None] = None
+
+
+def upgrade() -> None:
+    """Upgrade schema."""
+    # ### commands auto generated by Alembic - please adjust! ###
+    op.create_table('categories',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=100), nullable=False),
+    sa.Column('slug', sa.String(length=100), nullable=False),
+    sa.Column('icon', sa.String(length=10), nullable=True),
+    sa.Column('product_count', sa.Integer(), nullable=True),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name'),
+    sa.UniqueConstraint('slug')
+    )
+    op.create_index(op.f('ix_categories_id'), 'categories', ['id'], unique=False)
+    op.create_table('users',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=100), nullable=False),
+    sa.Column('email', sa.String(length=255), nullable=False),
+    sa.Column('phone', sa.String(length=20), nullable=True),
+    sa.Column('password', sa.String(length=255), nullable=False),
+    sa.Column('role', sa.Enum('user', 'admin', name='userrole'), nullable=True),
+    sa.Column('avatar', sa.String(length=500), nullable=True),
+    sa.Column('is_active', sa.Boolean(), nullable=True),
+    sa.Column('is_verified', sa.Boolean(), nullable=True),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
+    sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
+    op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
+    op.create_table('addresses',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('label', sa.String(length=50), nullable=True),
+    sa.Column('full_name', sa.String(length=100), nullable=False),
+    sa.Column('street', sa.String(length=255), nullable=False),
+    sa.Column('city', sa.String(length=100), nullable=False),
+    sa.Column('state', sa.String(length=100), nullable=False),
+    sa.Column('zip', sa.String(length=20), nullable=False),
+    sa.Column('country', sa.String(length=100), nullable=True),
+    sa.Column('phone', sa.String(length=20), nullable=True),
+    sa.Column('is_default', sa.Boolean(), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_addresses_id'), 'addresses', ['id'], unique=False)
+    op.create_table('orders',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('order_number', sa.String(length=50), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('status', sa.Enum('pending', 'processing', 'shipped', 'delivered', 'cancelled', name='orderstatus'), nullable=True),
+    sa.Column('subtotal', sa.Float(), nullable=False),
+    sa.Column('shipping', sa.Float(), nullable=True),
+    sa.Column('tax', sa.Float(), nullable=True),
+    sa.Column('total', sa.Float(), nullable=False),
+    sa.Column('payment_method', sa.String(length=50), nullable=True),
+    sa.Column('payment_status', sa.String(length=50), nullable=True),
+    sa.Column('address', sa.JSON(), nullable=False),
+    sa.Column('tracking', sa.JSON(), nullable=True),
+    sa.Column('notes', sa.String(length=500), nullable=True),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
+    sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_orders_id'), 'orders', ['id'], unique=False)
+    op.create_index(op.f('ix_orders_order_number'), 'orders', ['order_number'], unique=True)
+    op.create_table('products',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=False),
+    sa.Column('slug', sa.String(length=255), nullable=False),
+    sa.Column('description', sa.Text(), nullable=True),
+    sa.Column('price', sa.Float(), nullable=False),
+    sa.Column('discount', sa.Integer(), nullable=True),
+    sa.Column('stock', sa.Integer(), nullable=True),
+    sa.Column('rating', sa.Float(), nullable=True),
+    sa.Column('reviews', sa.Integer(), nullable=True),
+    sa.Column('sold', sa.Integer(), nullable=True),
+    sa.Column('image', sa.String(length=500), nullable=True),
+    sa.Column('images', sa.JSON(), nullable=True),
+    sa.Column('category', sa.String(length=100), nullable=False),
+    sa.Column('tags', sa.JSON(), nullable=True),
+    sa.Column('specifications', sa.JSON(), nullable=True),
+    sa.Column('is_featured', sa.Boolean(), nullable=True),
+    sa.Column('is_new', sa.Boolean(), nullable=True),
+    sa.Column('is_active', sa.Boolean(), nullable=True),
+    sa.Column('category_id', sa.Integer(), nullable=True),
+    sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
+    sa.Column('updated_at', sa.DateTime(timezone=True), nullable=True),
+    sa.ForeignKeyConstraint(['category_id'], ['categories.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('slug')
+    )
+    op.create_index(op.f('ix_products_id'), 'products', ['id'], unique=False)
+    op.create_index(op.f('ix_products_name'), 'products', ['name'], unique=False)
+    op.create_table('cart_items',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('product_id', sa.Integer(), nullable=False),
+    sa.Column('quantity', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_cart_items_id'), 'cart_items', ['id'], unique=False)
+    op.create_table('order_items',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('order_id', sa.Integer(), nullable=False),
+    sa.Column('product_id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=False),
+    sa.Column('price', sa.Float(), nullable=False),
+    sa.Column('quantity', sa.Integer(), nullable=False),
+    sa.Column('image', sa.String(length=500), nullable=True),
+    sa.ForeignKeyConstraint(['order_id'], ['orders.id'], ),
+    sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_order_items_id'), 'order_items', ['id'], unique=False)
+    op.create_table('wishlist',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('product_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_wishlist_id'), 'wishlist', ['id'], unique=False)
+    # ### end Alembic commands ###
+
+
+def downgrade() -> None:
+    """Downgrade schema."""
+    # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_index(op.f('ix_wishlist_id'), table_name='wishlist')
+    op.drop_table('wishlist')
+    op.drop_index(op.f('ix_order_items_id'), table_name='order_items')
+    op.drop_table('order_items')
+    op.drop_index(op.f('ix_cart_items_id'), table_name='cart_items')
+    op.drop_table('cart_items')
+    op.drop_index(op.f('ix_products_name'), table_name='products')
+    op.drop_index(op.f('ix_products_id'), table_name='products')
+    op.drop_table('products')
+    op.drop_index(op.f('ix_orders_order_number'), table_name='orders')
+    op.drop_index(op.f('ix_orders_id'), table_name='orders')
+    op.drop_table('orders')
+    op.drop_index(op.f('ix_addresses_id'), table_name='addresses')
+    op.drop_table('addresses')
+    op.drop_index(op.f('ix_users_id'), table_name='users')
+    op.drop_index(op.f('ix_users_email'), table_name='users')
+    op.drop_table('users')
+    op.drop_index(op.f('ix_categories_id'), table_name='categories')
+    op.drop_table('categories')
+    # ### end Alembic commands ###
+</file>
+
+<file path="app/api/deps.py">
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from sqlalchemy.orm import Session
+from jose import JWTError
+from app.core.database import get_db
+from app.core.security import decode_token
+from app.models.user import User, UserRole
+
+bearer = HTTPBearer()
+
+def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(bearer),
+    db: Session = Depends(get_db),
+) -> User:
+    """Extract and validate JWT, return current user."""
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = decode_token(credentials.credentials)
+        user_id: str = payload.get("sub")
+        token_type: str = payload.get("type")
+        if user_id is None or token_type != "access":
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+
+    user = db.query(User).filter(User.id == int(user_id)).first()
+    if user is None or not user.is_active:
+        raise credentials_exception
+    return user
+
+def get_current_admin(current_user: User = Depends(get_current_user)) -> User:
+    """Require admin role."""
+    if current_user.role != UserRole.admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin access required",
+        )
+    return current_user
+
+# Optional auth — returns None if no token provided
+def get_optional_user(
+    db: Session = Depends(get_db),
+    credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer(auto_error=False)),
+) -> User | None:
+    if credentials is None:
+        return None
+    try:
+        payload = decode_token(credentials.credentials)
+        user_id = payload.get("sub")
+        return db.query(User).filter(User.id == int(user_id)).first()
+    except Exception:
+        return None
+</file>
+
+<file path="app/api/routes/analytics.py">
+
+</file>
+
+<file path="app/api/routes/auth.py">
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from app.core.database import get_db
+from app.core.security import hash_password, verify_password, needs_rehash, create_token_pair, decode_token
+from app.models.user import User
+from app.schemas.auth import RegisterRequest, LoginRequest, TokenResponse, RefreshRequest
+from app.schemas.user import UserOut
+from app.api.deps import get_current_user
+from jose import JWTError
+
+router = APIRouter(prefix="/auth", tags=["auth"])
+
+
+@router.post("/register", response_model=TokenResponse, status_code=201)
+def register(data: RegisterRequest, db: Session = Depends(get_db)):
+    # Check duplicate email
+    if db.query(User).filter(User.email == data.email).first():
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    user = User(
+        name     = data.name,
+        email    = data.email,
+        phone    = data.phone,
+        password = hash_password(data.password),
+        role     = "user",
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    return create_token_pair(user.id, user.role)
+
+
+@router.post("/login", response_model=TokenResponse)
+def login(data: LoginRequest, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == data.email).first()
+
+    # Use constant-time comparison (argon2 handles this internally)
+    if not user or not verify_password(data.password, user.password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid email or password",
+        )
+
+    if not user.is_active:
+        raise HTTPException(status_code=403, detail="Account is deactivated")
+
+    # Rehash if cost parameters changed
+    if needs_rehash(user.password):
+        user.password = hash_password(data.password)
+        db.commit()
+
+    return create_token_pair(user.id, user.role)
+
+
+@router.post("/refresh", response_model=TokenResponse)
+def refresh_token(data: RefreshRequest, db: Session = Depends(get_db)):
+    try:
+        payload = decode_token(data.refresh_token)
+        if payload.get("type") != "refresh":
+            raise HTTPException(status_code=401, detail="Invalid token type")
+        user_id = payload.get("sub")
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Invalid or expired refresh token")
+
+    user = db.query(User).filter(User.id == int(user_id)).first()
+    if not user or not user.is_active:
+        raise HTTPException(status_code=401, detail="User not found")
+
+    return create_token_pair(user.id, user.role)
+
+
+@router.get("/me", response_model=UserOut)
+def get_me(current_user: User = Depends(get_current_user)):
+    return current_user
+
+
+@router.post("/forgot-password")
+def forgot_password(email: str, db: Session = Depends(get_db)):
+    # In production: generate reset token, send email
+    user = db.query(User).filter(User.email == email).first()
+    # Always return 200 to prevent email enumeration
+    return {"message": "If that email is registered, a reset link has been sent."}
+
+
+@router.post("/reset-password")
+def reset_password(token: str, new_password: str, db: Session = Depends(get_db)):
+    try:
+        payload = decode_token(token)
+        user_id = payload.get("sub")
+    except JWTError:
+        raise HTTPException(status_code=400, detail="Invalid or expired token")
+
+    user = db.query(User).filter(User.id == int(user_id)).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    user.password = hash_password(new_password)
+    db.commit()
+    return {"message": "Password reset successfully"}
+</file>
+
+<file path="app/api/routes/categories.py">
+
+</file>
+
+<file path="app/api/routes/orders.py">
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from app.core.database import get_db
+from app.models.order import Order, OrderItem, Address
+from app.models.product import Product
+from app.schemas.order import OrderCreate, OrderStatusUpdate
+from app.api.deps import get_current_user, get_current_admin
+from app.models.user import User
+import random, string
+from datetime import datetime
+
+router = APIRouter(prefix="/orders", tags=["orders"])
+
+
+def generate_order_number() -> str:
+    year = datetime.now().year
+    rand = ''.join(random.choices(string.digits, k=6))
+    return f"ORD-{year}-{rand}"
+
+
+def serialize_order(o) -> dict:
+    return {
+        "id":             o.id,
+        "order_number":   o.order_number,
+        "user_id":        o.user_id,
+        "status":         o.status.value if hasattr(o.status, 'value') else o.status,
+        "subtotal":       o.subtotal,
+        "shipping":       o.shipping,
+        "tax":            o.tax,
+        "total":          o.total,
+        "payment_method": o.payment_method,
+        "payment_status": o.payment_status,
+        "address":        o.address   if isinstance(o.address,   dict) else {},
+        "tracking":       o.tracking  if isinstance(o.tracking,  list) else [],
+        "notes":          o.notes or "",
+        "items": [
+            {
+                "product_id": i.product_id,
+                "name":       i.name,
+                "price":      i.price,
+                "quantity":   i.quantity,
+                "image":      i.image or "",
+            }
+            for i in (o.items or [])
+        ],
+        "created_at": o.created_at.isoformat() if o.created_at else None,
+        "updated_at": o.updated_at.isoformat() if o.updated_at else None,
+    }
+
+
+@router.get("")                         # ← Admin — get all orders
+def get_all_orders(
+    db:     Session = Depends(get_db),
+    _admin: User    = Depends(get_current_admin),
+):
+    orders = db.query(Order).order_by(Order.created_at.desc()).all()
+    return [serialize_order(o) for o in orders]
+
+
+@router.get("/my")                      # ← User — get own orders
+def get_my_orders(
+    db:           Session = Depends(get_db),
+    current_user: User    = Depends(get_current_user),
+):
+    orders = db.query(Order).filter(Order.user_id == current_user.id)\
+               .order_by(Order.created_at.desc()).all()
+    return [serialize_order(o) for o in orders]
+
+
+@router.get("/{order_id}")
+def get_order(
+    order_id:     int,
+    db:           Session = Depends(get_db),
+    current_user: User    = Depends(get_current_user),
+):
+    order = db.query(Order).filter(Order.id == order_id).first()
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    if order.user_id != current_user.id and current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Access denied")
+    return serialize_order(order)
+
+
+@router.post("", status_code=201)
+def create_order(
+    data:         OrderCreate,
+    db:           Session = Depends(get_db),
+    current_user: User    = Depends(get_current_user),
+):
+    address = db.query(Address).filter(
+        Address.id      == data.address_id,
+        Address.user_id == current_user.id,
+    ).first()
+    if not address:
+        raise HTTPException(status_code=404, detail="Address not found")
+
+    subtotal    = 0.0
+    order_items = []
+
+    for item_in in data.items:
+        product = db.query(Product).filter(
+            Product.id        == item_in.product_id,
+            Product.is_active == True,
+        ).first()
+        if not product:
+            raise HTTPException(status_code=404, detail=f"Product {item_in.product_id} not found")
+        if product.stock < item_in.quantity:
+            raise HTTPException(status_code=400, detail=f"Insufficient stock for {product.name}")
+
+        price     = product.price * (1 - product.discount / 100) if product.discount else product.price
+        subtotal += price * item_in.quantity
+
+        order_items.append(OrderItem(
+            product_id = product.id,
+            name       = product.name,
+            price      = price,
+            quantity   = item_in.quantity,
+            image      = product.image,
+        ))
+
+        product.stock -= item_in.quantity
+        product.sold  += item_in.quantity
+
+    shipping = 0.0 if subtotal >= 500 else 99.0
+    tax      = subtotal * 0.18
+    total    = subtotal + shipping + tax
+
+    order = Order(
+        order_number   = generate_order_number(),
+        user_id        = current_user.id,
+        subtotal       = subtotal,
+        shipping       = shipping,
+        tax            = tax,
+        total          = total,
+        payment_method = data.payment_method,
+        payment_status = "pending",
+        address        = {
+            "full_name": address.full_name,
+            "street":    address.street,
+            "city":      address.city,
+            "state":     address.state,
+            "zip":       address.zip,
+            "country":   address.country,
+        },
+        tracking = [
+            {"status": "Order Placed",     "date": datetime.utcnow().isoformat(), "done": True},
+            {"status": "Processing",       "date": None, "done": False},
+            {"status": "Shipped",          "date": None, "done": False},
+            {"status": "Out for Delivery", "date": None, "done": False},
+            {"status": "Delivered",        "date": None, "done": False},
+        ],
+        notes = data.notes,
+        items = order_items,
+    )
+
+    db.add(order)
+    db.commit()
+    db.refresh(order)
+    return serialize_order(order)
+
+
+@router.patch("/{order_id}/status")
+def update_order_status(
+    order_id: int,
+    data:     OrderStatusUpdate,
+    db:       Session = Depends(get_db),
+    _admin:   User    = Depends(get_current_admin),
+):
+    order = db.query(Order).filter(Order.id == order_id).first()
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+
+    order.status = data.status
+
+    status_map = {"processing": 1, "shipped": 2, "delivered": 4}
+    tracking   = order.tracking or []
+    idx        = status_map.get(data.status.value if hasattr(data.status, 'value') else data.status)
+    if idx and idx < len(tracking):
+        tracking[idx]["done"] = True
+        tracking[idx]["date"] = datetime.utcnow().isoformat()
+    order.tracking = tracking
+
+    db.commit()
+    db.refresh(order)
+    return serialize_order(order)
+</file>
+
+<file path="app/api/routes/products.py">
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy.orm import Session
+from app.core.database import get_db
+from app.models.product import Product
+from app.schemas.product import ProductCreate, ProductUpdate
+from app.api.deps import get_current_admin
+from app.models.user import User
+
+router = APIRouter(prefix="/products", tags=["products"])
+
+
+def serialize_product(p: Product) -> dict:
+    return {
+        "id":             p.id,
+        "name":           p.name,
+        "slug":           p.slug or "",
+        "description":    p.description or "",
+        "price":          p.price,
+        "discount":       p.discount or 0,
+        "stock":          p.stock or 0,
+        "rating":         p.rating or 0.0,
+        "reviews":        p.reviews or 0,
+        "sold":           p.sold or 0,
+        "image":          p.image or "",
+        "images":         p.images  if isinstance(p.images,  list) else [],
+        "category":       p.category or "",
+        "tags":           p.tags    if isinstance(p.tags,    list) else [],
+        "specifications": p.specifications if isinstance(p.specifications, dict) else {},
+        "is_featured":    p.is_featured or False,
+        "is_new":         p.is_new      or False,
+        "is_active":      p.is_active   if p.is_active is not None else True,
+        "created_at":     p.created_at.isoformat() if p.created_at else None,
+    }
+
+
+# ── Public routes (no auth needed) ───────────────────────────────────────────
+
+@router.get("")                         # ← no response_model
+def get_products(
+    db:        Session = Depends(get_db),
+    page:      int     = Query(1, ge=1),
+    per_page:  int     = Query(12, ge=1, le=100),
+    category:  str     = Query(None),
+    search:    str     = Query(None),
+    min_price: float   = Query(None),
+    max_price: float   = Query(None),
+    sort_by:   str     = Query("featured"),
+    in_stock:  bool    = Query(False),
+):
+    query = db.query(Product).filter(Product.is_active == True)
+
+    if category:              query = query.filter(Product.category == category)
+    if search:                query = query.filter(Product.name.ilike(f"%{search}%"))
+    if min_price is not None: query = query.filter(Product.price >= min_price)
+    if max_price is not None: query = query.filter(Product.price <= max_price)
+    if in_stock:              query = query.filter(Product.stock > 0)
+
+    if sort_by == "price-asc":    query = query.order_by(Product.price.asc())
+    elif sort_by == "price-desc": query = query.order_by(Product.price.desc())
+    elif sort_by == "rating":     query = query.order_by(Product.rating.desc())
+    elif sort_by == "newest":     query = query.order_by(Product.created_at.desc())
+    else:                         query = query.order_by(Product.is_featured.desc())
+
+    total = query.count()
+    items = query.offset((page - 1) * per_page).limit(per_page).all()
+
+    return {
+        "items":    [serialize_product(p) for p in items],
+        "total":    total,
+        "page":     page,
+        "per_page": per_page,
+    }
+
+
+@router.get("/{product_id}")            # ← no response_model
+def get_product(product_id: int, db: Session = Depends(get_db)):
+    product = db.query(Product).filter(
+        Product.id == product_id,
+        Product.is_active == True,
+    ).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return serialize_product(product)
+
+
+# ── Admin routes ──────────────────────────────────────────────────────────────
+
+@router.post("", status_code=201)       # ← no response_model
+def create_product(
+    data:   ProductCreate,
+    db:     Session = Depends(get_db),
+    _admin: User    = Depends(get_current_admin),
+):
+    slug = data.name.lower()
+    slug = ''.join(c if c.isalnum() or c == ' ' else ' ' for c in slug)
+    slug = '-'.join(slug.split())
+
+    product = Product(**data.model_dump(), slug=slug)
+    db.add(product)
+    db.commit()
+    db.refresh(product)
+    return serialize_product(product)
+
+
+@router.put("/{product_id}")            # ← no response_model
+def update_product(
+    product_id: int,
+    data:       ProductUpdate,
+    db:         Session = Depends(get_db),
+    _admin:     User    = Depends(get_current_admin),
+):
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    for key, val in data.model_dump(exclude_unset=True).items():
+        setattr(product, key, val)
+    db.commit()
+    db.refresh(product)
+    return serialize_product(product)
+
+
+@router.delete("/{product_id}", status_code=204)
+def delete_product(
+    product_id: int,
+    db:         Session = Depends(get_db),
+    _admin:     User    = Depends(get_current_admin),
+):
+    product = db.query(Product).filter(Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    product.is_active = False
+    db.commit()
+</file>
+
+<file path="app/api/routes/users.py">
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from app.core.database import get_db
+from app.models.user import User
+from app.models.order import Address
+from app.schemas.user import UserOut, UserUpdate
+from app.schemas.order import AddressCreate
+from app.api.deps import get_current_user, get_current_admin
+
+router = APIRouter(prefix="/users", tags=["users"])
+
+
+# ── Address routes — MUST come before /me to avoid route conflict ─────────────
+
+@router.get("/me/addresses")
+def get_addresses(
+    db:           Session = Depends(get_db),
+    current_user: User    = Depends(get_current_user),
+):
+    addresses = db.query(Address).filter(Address.user_id == current_user.id).all()
+    return [
+        {
+            "id":         a.id,
+            "user_id":    a.user_id,
+            "label":      a.label,
+            "full_name":  a.full_name,
+            "street":     a.street,
+            "city":       a.city,
+            "state":      a.state,
+            "zip":        a.zip,
+            "country":    a.country,
+            "phone":      a.phone,
+            "is_default": a.is_default,
+        }
+        for a in addresses
+    ]
+
+
+@router.post("/me/addresses", status_code=201)
+def add_address(
+    data:         AddressCreate,
+    db:           Session = Depends(get_db),
+    current_user: User    = Depends(get_current_user),
+):
+    # If new address is default, unset existing default
+    if data.is_default:
+        db.query(Address).filter(
+            Address.user_id    == current_user.id,
+            Address.is_default == True,
+        ).update({"is_default": False})
+
+    addr = Address(user_id=current_user.id, **data.model_dump())
+    db.add(addr)
+    db.commit()
+    db.refresh(addr)
+    return {
+        "id":         addr.id,
+        "user_id":    addr.user_id,
+        "label":      addr.label,
+        "full_name":  addr.full_name,
+        "street":     addr.street,
+        "city":       addr.city,
+        "state":      addr.state,
+        "zip":        addr.zip,
+        "country":    addr.country,
+        "phone":      addr.phone,
+        "is_default": addr.is_default,
+    }
+
+
+@router.delete("/me/addresses/{address_id}", status_code=204)
+def delete_address(
+    address_id:   int,
+    db:           Session = Depends(get_db),
+    current_user: User    = Depends(get_current_user),
+):
+    addr = db.query(Address).filter(
+        Address.id      == address_id,
+        Address.user_id == current_user.id,
+    ).first()
+    if not addr:
+        raise HTTPException(status_code=404, detail="Address not found")
+    db.delete(addr)
+    db.commit()
+
+
+@router.patch("/me/addresses/{address_id}/default")
+def set_default_address(
+    address_id:   int,
+    db:           Session = Depends(get_db),
+    current_user: User    = Depends(get_current_user),
+):
+    # Unset all defaults first
+    db.query(Address).filter(
+        Address.user_id    == current_user.id,
+        Address.is_default == True,
+    ).update({"is_default": False})
+
+    # Set new default
+    addr = db.query(Address).filter(
+        Address.id      == address_id,
+        Address.user_id == current_user.id,
+    ).first()
+    if not addr:
+        raise HTTPException(status_code=404, detail="Address not found")
+
+    addr.is_default = True
+    db.commit()
+    return {"message": "Default address updated"}
+
+
+# ── User profile routes ───────────────────────────────────────────────────────
+
+@router.get("/me", response_model=UserOut)
+def get_profile(current_user: User = Depends(get_current_user)):
+    return current_user
+
+
+@router.patch("/me", response_model=UserOut)
+def update_profile(
+    data:         UserUpdate,
+    db:           Session = Depends(get_db),
+    current_user: User    = Depends(get_current_user),
+):
+    for key, val in data.model_dump(exclude_unset=True).items():
+        setattr(current_user, key, val)
+    db.commit()
+    db.refresh(current_user)
+    return current_user
+
+
+# ── Admin routes ──────────────────────────────────────────────────────────────
+
+@router.get("", response_model=list[UserOut])
+def get_all_users(
+    db:     Session = Depends(get_db),
+    _admin: User    = Depends(get_current_admin),
+):
+    return db.query(User).all()
+
+
+@router.patch("/{user_id}/deactivate")
+def deactivate_user(
+    user_id: int,
+    db:      Session = Depends(get_db),
+    _admin:  User    = Depends(get_current_admin),
+):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    user.is_active = False
+    db.commit()
+    return {"message": "User deactivated"}
+</file>
+
+<file path="app/core/config.py">
+from pydantic_settings import BaseSettings
+from typing import Optional
+
+class Settings(BaseSettings):
+
+    APP_NAME: str = "ShopElite API"
+    DEBUG: bool = False
+    API_V1_STR: str = "/api/v1"
+
+    DATABASE_URL: str
+    DATABASE_MIGRATION_URL: str = ""
+    
+    SECRET_KEY: str
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+
+    FRONTEND_URL: str = "http://localhost:5173"
+
+    class Config:
+        env_file = ".env"
+
+settings = Settings()
+</file>
+
+<file path="app/core/database.py">
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from app.core.config import settings
+
+engine = create_engine(
+    settings.DATABASE_URL,
+    pool_pre_ping=True,
+    pool_size=10,
+    max_overflow=20,
+)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+</file>
+
+<file path="app/core/security.py">
+import bcrypt
+from datetime import datetime, timedelta
+from typing import Optional, Literal
+from jose import JWTError, jwt
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError, VerificationError, InvalidHashError
+from app.core.config import settings
+
+ph = PasswordHasher(
+    time_cost=2,        
+    memory_cost=65536, 
+    parallelism=2,      
+    hash_len=32,
+    salt_len=16,
+)
+
+def hash_password(plain: str) -> str:
+    """Hash a plain text password using Argon2id."""
+    return ph.hash(plain)
+
+def verify_password(plain: str, hashed: str) -> bool:
+    """Verify plain password against Argon2 hash."""
+    try:
+        return ph.verify(hashed, plain)
+    except (VerifyMismatchError, VerificationError, InvalidHashError):
+        return False
+
+def needs_rehash(hashed: str) -> bool:
+    """Check if hash needs upgrading (e.g. after changing cost params)."""
+    return ph.check_needs_rehash(hashed)
+
+
+def create_token(
+    subject: str,
+    token_type: Literal["access", "refresh"],
+    extra_data: dict = {},
+) -> str:
+    """Create a signed JWT token."""
+    if token_type == "access":
+        expire = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    else:
+        expire = datetime.utcnow() + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
+
+    payload = {
+        "sub": str(subject),        # user id
+        "type": token_type,
+        "exp": expire,
+        "iat": datetime.utcnow(),
+        **extra_data,               # e.g. {"role": "admin"}
+    }
+    return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+
+def decode_token(token: str) -> dict:
+    """Decode and verify a JWT token. Raises JWTError on failure."""
+    return jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+
+def create_token_pair(user_id: int, role: str) -> dict:
+    """Create both access and refresh tokens at once."""
+    return {
+        "access_token":  create_token(str(user_id), "access",  {"role": role}),
+        "refresh_token": create_token(str(user_id), "refresh", {"role": role}),
+        "token_type":    "bearer",
+    }
+</file>
+
+<file path="app/crud/category.py">
+
+</file>
+
+<file path="app/crud/order.py">
+
+</file>
+
+<file path="app/crud/product.py">
+
+</file>
+
+<file path="app/crud/user.py">
+
+</file>
+
+<file path="app/models/order.py">
+from sqlalchemy import Boolean, Column, Integer, String, Float, DateTime, ForeignKey, Enum, JSON
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+import enum
+from app.core.database import Base
+
+class OrderStatus(str, enum.Enum):
+    pending    = "pending"
+    processing = "processing"
+    shipped    = "shipped"
+    delivered  = "delivered"
+    cancelled  = "cancelled"
+
+class Order(Base):
+    __tablename__ = "orders"
+
+    id             = Column(Integer, primary_key=True, index=True)
+    order_number   = Column(String(50), unique=True, index=True)  # ORD-2024-001
+    user_id        = Column(Integer, ForeignKey("users.id"), nullable=False)
+    status         = Column(Enum(OrderStatus), default=OrderStatus.pending)
+    subtotal       = Column(Float, nullable=False)
+    shipping       = Column(Float, default=0.0)
+    tax            = Column(Float, default=0.0)
+    total          = Column(Float, nullable=False)
+    payment_method = Column(String(50), nullable=True)
+    payment_status = Column(String(50), default="pending")
+    address        = Column(JSON, nullable=False)   # snapshot of address at order time
+    tracking       = Column(JSON, default=[])
+    notes          = Column(String(500), nullable=True)
+    created_at     = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at     = Column(DateTime(timezone=True), onupdate=func.now())
+
+    user   = relationship("User",      back_populates="orders")
+    items  = relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
+
+
+class OrderItem(Base):
+    __tablename__ = "order_items"
+
+    id         = Column(Integer, primary_key=True, index=True)
+    order_id   = Column(Integer, ForeignKey("orders.id"), nullable=False)
+    product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
+    name       = Column(String(255), nullable=False)   # snapshot of product name
+    price      = Column(Float, nullable=False)         # snapshot of price at order time
+    quantity   = Column(Integer, nullable=False)
+    image      = Column(String(500), nullable=True)
+
+    order   = relationship("Order",   back_populates="items")
+    product = relationship("Product", back_populates="order_items")
+
+
+class Address(Base):
+    __tablename__ = "addresses"
+
+    id         = Column(Integer, primary_key=True, index=True)
+    user_id    = Column(Integer, ForeignKey("users.id"), nullable=False)
+    label      = Column(String(50), default="Home")
+    full_name  = Column(String(100), nullable=False)
+    street     = Column(String(255), nullable=False)
+    city       = Column(String(100), nullable=False)
+    state      = Column(String(100), nullable=False)
+    zip        = Column(String(20),  nullable=False)
+    country    = Column(String(100), default="India")
+    phone      = Column(String(20),  nullable=True)
+    is_default = Column(Boolean, default=False)
+
+    user = relationship("User", back_populates="addresses")
+
+
+class CartItem(Base):
+    __tablename__ = "cart_items"
+
+    id         = Column(Integer, primary_key=True, index=True)
+    user_id    = Column(Integer, ForeignKey("users.id"), nullable=False)
+    product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
+    quantity   = Column(Integer, default=1)
+
+    user    = relationship("User",    back_populates="cart_items")
+    product = relationship("Product", back_populates="cart_items")
+
+
+class Wishlist(Base):
+    __tablename__ = "wishlist"
+
+    id         = Column(Integer, primary_key=True, index=True)
+    user_id    = Column(Integer, ForeignKey("users.id"), nullable=False)
+    product_id = Column(Integer, ForeignKey("products.id"), nullable=False)
+
+    user    = relationship("User",    back_populates="wishlist")
+    product = relationship("Product", back_populates="wishlist")
+</file>
+
+<file path="app/models/product.py">
+from sqlalchemy import Column, Integer, String, Float, Boolean, DateTime, ForeignKey, Text, JSON
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+from app.core.database import Base
+
+class Category(Base):
+    __tablename__ = "categories"
+
+    id            = Column(Integer, primary_key=True, index=True)
+    name          = Column(String(100), unique=True, nullable=False)
+    slug          = Column(String(100), unique=True, nullable=False)
+    icon          = Column(String(10),  nullable=True)
+    product_count = Column(Integer, default=0)
+    created_at    = Column(DateTime(timezone=True), server_default=func.now())
+
+    products = relationship("Product", back_populates="category_rel")
+
+
+class Product(Base):
+    __tablename__ = "products"
+
+    id          = Column(Integer, primary_key=True, index=True)
+    name        = Column(String(255), nullable=False, index=True)
+    slug        = Column(String(255), unique=True, nullable=False)
+    description = Column(Text, nullable=True)
+    price       = Column(Float, nullable=False)
+    discount    = Column(Integer, default=0)           # percentage
+    stock       = Column(Integer, default=0)
+    rating      = Column(Float, default=0.0)
+    reviews     = Column(Integer, default=0)
+    sold        = Column(Integer, default=0)
+    image       = Column(String(500), nullable=True)
+    images      = Column(JSON, default=[])             # list of URLs
+    category    = Column(String(100), nullable=False)
+    tags        = Column(JSON, default=[])
+    specifications = Column(JSON, default={})
+    is_featured = Column(Boolean, default=False)
+    is_new      = Column(Boolean, default=False)
+    is_active   = Column(Boolean, default=True)
+    category_id = Column(Integer, ForeignKey("categories.id"), nullable=True)
+    created_at  = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at  = Column(DateTime(timezone=True), onupdate=func.now())
+
+    category_rel = relationship("Category", back_populates="products")
+    order_items  = relationship("OrderItem", back_populates="product")
+    cart_items   = relationship("CartItem",  back_populates="product")
+    wishlist     = relationship("Wishlist",  back_populates="product")
+</file>
+
+<file path="app/models/user.py">
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, Enum
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+import enum
+from app.core.database import Base
+
+class UserRole(str, enum.Enum):
+    user  = "user"
+    admin = "admin"
+
+class User(Base):
+    __tablename__ = "users"
+
+    id         = Column(Integer, primary_key=True, index=True)
+    name       = Column(String(100), nullable=False)
+    email      = Column(String(255), unique=True, index=True, nullable=False)
+    phone      = Column(String(20), nullable=True)
+    password   = Column(String(255), nullable=False)         # argon2 hash
+    role       = Column(Enum(UserRole), default=UserRole.user)
+    avatar     = Column(String(500), nullable=True)
+    is_active  = Column(Boolean, default=True)
+    is_verified= Column(Boolean, default=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+    # Relationships
+    orders    = relationship("Order",   back_populates="user")
+    addresses = relationship("Address", back_populates="user", cascade="all, delete-orphan")
+    cart_items= relationship("CartItem",back_populates="user", cascade="all, delete-orphan")
+    wishlist  = relationship("Wishlist",back_populates="user", cascade="all, delete-orphan")
+</file>
+
+<file path="app/schemas/auth.py">
+from pydantic import BaseModel, EmailStr, field_validator
+import re
+
+class RegisterRequest(BaseModel):
+    name:     str
+    email:    EmailStr
+    password: str
+    phone:    str | None = None
+
+    @field_validator("password")
+    def password_strength(cls, v):
+        if len(v) < 8:
+            raise ValueError("Password must be at least 8 characters")
+        if not re.search(r"[A-Z]", v):
+            raise ValueError("Password must contain an uppercase letter")
+        if not re.search(r"\d", v):
+            raise ValueError("Password must contain a digit")
+        return v
+
+class LoginRequest(BaseModel):
+    email:    EmailStr
+    password: str
+
+class TokenResponse(BaseModel):
+    access_token:  str
+    refresh_token: str
+    token_type:    str = "bearer"
+
+class RefreshRequest(BaseModel):
+    refresh_token: str
+</file>
+
+<file path="app/schemas/category.py">
+
+</file>
+
+<file path="app/schemas/order.py">
+from pydantic import BaseModel
+from datetime import datetime
+from app.models.order import OrderStatus
+from typing import Any
+
+class OrderItemIn(BaseModel):
+    product_id: int
+    quantity:   int
+
+class OrderCreate(BaseModel):
+    items:          list[OrderItemIn]
+    address_id:     int
+    payment_method: str
+    notes:          str | None = None
+
+class OrderItemOut(BaseModel):
+    product_id: int
+    name:       str
+    price:      float
+    quantity:   int
+    image:      str | None
+
+    class Config:
+        from_attributes = True
+
+class OrderOut(BaseModel):
+    id:             int
+    order_number:   str
+    status:         OrderStatus
+    subtotal:       float
+    shipping:       float
+    tax:            float
+    total:          float
+    payment_method: str | None
+    payment_status: str
+    address:        dict[str, Any]
+    tracking:       list[dict]
+    items:          list[OrderItemOut]
+    created_at:     datetime
+
+    class Config:
+        from_attributes = True
+
+class OrderStatusUpdate(BaseModel):
+    status: OrderStatus
+
+class AddressCreate(BaseModel):
+    label:      str = "Home"
+    full_name:  str
+    street:     str
+    city:       str
+    state:      str
+    zip:        str
+    country:    str = "India"
+    phone:      str | None = None
+    is_default: bool = False
+</file>
+
+<file path="app/schemas/product.py">
+from pydantic import BaseModel
+from datetime import datetime
+from typing import Any
+
+class ProductBase(BaseModel):
+    name:           str
+    description:    str | None = None
+    price:          float
+    discount:       int = 0
+    stock:          int = 0
+    image:          str | None = None
+    images:         list[str] = []
+    category:       str
+    tags:           list[str] = []
+    specifications: dict[str, Any] = {}
+    is_featured:    bool = False
+    is_new:         bool = False
+
+class ProductCreate(ProductBase):
+    pass
+
+class ProductUpdate(ProductBase):
+    pass
+
+class ProductOut(ProductBase):
+    id:         int
+    slug:       str
+    rating:     float
+    reviews:    int
+    sold:       int
+    is_active:  bool
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+</file>
+
+<file path="app/schemas/user.py">
+from pydantic import BaseModel, EmailStr
+from datetime import datetime
+from app.models.user import UserRole
+
+class UserOut(BaseModel):
+    id:          int
+    name:        str
+    email:       EmailStr
+    phone:       str | None
+    role:        UserRole
+    avatar:      str | None
+    is_active:   bool
+    is_verified: bool
+    created_at:  datetime
+
+    class Config:
+        from_attributes = True
+
+class UserUpdate(BaseModel):
+    name:   str | None = None
+    phone:  str | None = None
+    avatar: str | None = None
+</file>
+
+<file path="gitignore">
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[codz]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py.cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+#   For a library or package, you might want to ignore these files since the code is
+#   intended to run in multiple environments; otherwise, check them in:
+# .python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   install all needed dependencies.
+#Pipfile.lock
+
+# UV
+#   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+#   commonly ignored for libraries.
+#uv.lock
+
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+#   commonly ignored for libraries.
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+#poetry.lock
+#poetry.toml
+
+# pdm
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+#   pdm recommends including project-wide configuration in pdm.toml, but excluding .pdm-python.
+#   https://pdm-project.org/en/latest/usage/project/#working-with-version-control
+#pdm.lock
+#pdm.toml
+.pdm-python
+.pdm-build/
+
+# pixi
+#   Similar to Pipfile.lock, it is generally recommended to include pixi.lock in version control.
+#pixi.lock
+#   Pixi creates a virtual environment in the .pixi directory, just like venv module creates one
+#   in the .venv directory. It is recommended not to include this directory in version control.
+.pixi
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+#.idea/
+
+# Abstra
+# Abstra is an AI-powered process automation framework.
+# Ignore directories containing user credentials, local state, and settings.
+# Learn more at https://abstra.io/docs
+.abstra/
+
+# Visual Studio Code
+#  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
+#  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
+#  and can be added to the global gitignore or merged into this file. However, if you prefer, 
+#  you could uncomment the following to ignore the entire vscode folder
+# .vscode/
+
+# Ruff stuff:
+.ruff_cache/
+
+# PyPI configuration file
+.pypirc
+
+# Cursor
+#  Cursor is an AI-powered code editor. `.cursorignore` specifies files/directories to
+#  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data
+#  refer to https://docs.cursor.com/context/ignore-files
+.cursorignore
+.cursorindexingignore
+
+# Marimo
+marimo/_static/
+marimo/_lsp/
+__marimo__/
+</file>
+
+<file path="requirements.txt">
+alembic==1.18.4
+annotated-doc==0.0.4
+annotated-types==0.7.0
+anyio==4.12.1
+argon2-cffi==25.1.0
+argon2-cffi-bindings==25.1.0
+bcrypt==5.0.0
+certifi==2026.2.25
+cffi==2.0.0
+click==8.3.1
+colorama==0.4.6
+cryptography==46.0.5
+dnspython==2.8.0
+ecdsa==0.19.1
+email-validator==2.3.0
+fastapi==0.135.1
+fastapi-cli==0.0.24
+fastapi-cloud-cli==0.14.0
+fastar==0.8.0
+greenlet==3.3.2
+h11==0.16.0
+httpcore==1.0.9
+httptools==0.7.1
+httpx==0.28.1
+idna==3.11
+Jinja2==3.1.6
+jose==1.0.0
+Mako==1.3.10
+markdown-it-py==4.0.0
+MarkupSafe==3.0.3
+mdurl==0.1.2
+passlib==1.7.4
+psycopg2==2.9.11
+pyasn1==0.6.2
+pycparser==3.0
+pydantic==2.12.5
+pydantic-extra-types==2.11.0
+pydantic-settings==2.13.1
+pydantic_core==2.41.5
+Pygments==2.19.2
+python-dotenv==1.2.2
+python-jose==3.5.0
+python-multipart==0.0.22
+PyYAML==6.0.3
+rich==14.3.3
+rich-toolkit==0.19.7
+rignore==0.7.6
+rsa==4.9.1
+sentry-sdk==2.53.0
+shellingham==1.5.4
+six==1.17.0
+SQLAlchemy==2.0.47
+starlette==0.52.1
+typer==0.24.1
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+urllib3==2.6.3
+uvicorn==0.41.0
+watchfiles==1.1.1
+websockets==16.0
+gunicorn==21.2.0
+</file>
+
+<file path="seed.py">
+print("=== SEED SCRIPT STARTING ===")
+import sys, os
+print(f"Python: {sys.executable}")
+print(f"Working dir: {os.getcwd()}")
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
+print("sys.path updated")
+
+try:
+    print("Importing config...")
+    from app.core.config import settings
+    print(f"DB URL: {settings.DATABASE_URL}")
+except Exception as e:
+    print(f"ERROR importing config: {e}")
+    sys.exit(1)
+
+try:
+    print("Importing database...")
+    from app.core.database import SessionLocal, engine, Base
+    print("Database imported OK")
+except Exception as e:
+    print(f"ERROR importing database: {e}")
+    sys.exit(1)
+
+try:
+    print("Importing security...")
+    from app.core.security import hash_password
+    print("Security imported OK")
+except Exception as e:
+    print(f"ERROR importing security: {e}")
+    sys.exit(1)
+
+try:
+    print("Importing models...")
+    from app.models.user     import User, UserRole
+    from app.models.product import Category
+    from app.models.product  import Product
+    from app.models.order    import Order, OrderItem
+    from app.models.order  import Address, CartItem, Wishlist
+    print("Models imported OK")
+except Exception as e:
+    print(f"ERROR importing models: {e}")
+    sys.exit(1)
+
+try:
+    print("Creating tables...")
+    Base.metadata.create_all(bind=engine)
+    print("Tables created OK")
+except Exception as e:
+    print(f"ERROR creating tables: {e}")
+    sys.exit(1)
+
+try:
+    print("Opening DB session...")
+    db = SessionLocal()
+    print("DB session opened OK")
+    
+    count = db.query(User).count()
+    print(f"Current user count: {count}")
+    db.close()
+except Exception as e:
+    print(f"ERROR with DB session: {e}")
+    sys.exit(1)
+
+print("=== ALL IMPORTS OK — RUNNING SEEDER ===")
+
+# ── Now the actual seeding ────────────────────────────────────────────────────
+
+db = SessionLocal()
+
+def seed_users():
+    print("\n🌱 Seeding users...")
+    if db.query(User).first():
+        print("   ⚠️  Users already exist, skipping.")
+        return
+
+    users = [
+        User(
+            name        = "Admin",
+            email       = "admin@gmail.com",
+            password    = hash_password("Admin@123"),
+            phone       = "+91-98765-43210",
+            role        = UserRole.admin,
+            avatar      = "https://i.pravatar.cc/150?img=1",
+            is_active   = True,
+            is_verified = True,
+        ),
+        User(
+            name        = "User1",
+            email       = "user1@gmail.com",
+            password    = hash_password("User1@123"),
+            phone       = "+91-91234-56789",
+            role        = UserRole.user,
+            avatar      = "https://i.pravatar.cc/150?img=5",
+            is_active   = True,
+            is_verified = True,
+        ),
+        User(
+            name        = "User2",
+            email       = "user2@gmail.com",
+            password    = hash_password("User2@123"),
+            phone       = "+91-99887-76655",
+            role        = UserRole.user,
+            avatar      = "https://i.pravatar.cc/150?img=3",
+            is_active   = True,
+            is_verified = True,
+        ),
+    ]
+
+    db.add_all(users)
+    db.commit()
+    print(f"   ✅ {len(users)} users created.")
+
+
+def seed_categories():
+    print("\n🌱 Seeding categories...")
+    if db.query(Category).first():
+        print("   ⚠️  Categories already exist, skipping.")
+        return
+
+    categories = [
+        Category(name="Electronics",    slug="electronics", icon="📱", product_count=0),
+        Category(name="Clothing",       slug="clothing",    icon="👗", product_count=0),
+        Category(name="Books",          slug="books",       icon="📚", product_count=0),
+        Category(name="Home & Kitchen", slug="home-garden", icon="🏠", product_count=0),
+        Category(name="Sports",         slug="sports",      icon="🏏", product_count=0),
+        Category(name="Beauty",         slug="beauty",      icon="💄", product_count=0),
+    ]
+
+    db.add_all(categories)
+    db.commit()
+    print(f"   ✅ {len(categories)} categories created.")
+
+
+def seed_addresses():
+    print("\n🌱 Seeding addresses...")
+    if db.query(Address).first():
+        print("   ⚠️  Addresses already exist, skipping.")
+        return
+
+    priya = db.query(User).filter(User.email == "user1@gmail.com").first()
+    arjun = db.query(User).filter(User.email == "user2@gmail.com").first()
+
+    if not priya or not arjun:
+        print("   ❌ Users not found, seed users first!")
+        return
+
+    addresses = [
+        Address(
+            user_id    = priya.id,
+            label      = "Home",
+            full_name  = "User1",
+            street     = "12, Vastrapur, Near Ahmedabad University",
+            city       = "Ahmedabad",
+            state      = "Gujarat",
+            zip        = "380015",
+            country    = "India",
+            phone      = "+91-91234-56789",
+            is_default = True,
+        ),
+        Address(
+            user_id    = priya.id,
+            label      = "Work",
+            full_name  = "User1",
+            street     = "501, Shapath Hexa, SG Highway",
+            city       = "Ahmedabad",
+            state      = "Gujarat",
+            zip        = "380060",
+            country    = "India",
+            phone      = "+91-91234-56789",
+            is_default = False,
+        ),
+        Address(
+            user_id    = arjun.id,
+            label      = "Home",
+            full_name  = "User2",
+            street     = "42, Bandra West, Linking Road",
+            city       = "Mumbai",
+            state      = "Maharashtra",
+            zip        = "400050",
+            country    = "India",
+            phone      = "+91-99887-76655",
+            is_default = True,
+        ),
+    ]
+
+    db.add_all(addresses)
+    db.commit()
+    print(f"   ✅ {len(addresses)} addresses created.")
+
+
+def seed_products():
+    print("\n🌱 Seeding products...")
+    if db.query(Product).first():
+        print("   ⚠️  Products already exist, skipping.")
+        return
+
+    def cat_id(slug):
+        c = db.query(Category).filter(Category.slug == slug).first()
+        return c.id if c else None
+
+    products_data = [
+        dict(name="Samsung Galaxy S24 Ultra",          category="electronics", price=129999, discount=10, stock=30,  rating=4.8, reviews=4200,  is_featured=True,  image="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400"),
+        dict(name="OnePlus 12R",                       category="electronics", price=44999,  discount=0,  stock=50,  rating=4.7, reviews=3100,  is_featured=True,  image="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400"),
+        dict(name="boAt Rockerz 550 Headphones",       category="electronics", price=1999,   discount=15, stock=200, rating=4.5, reviews=8900,  is_featured=True,  image="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400"),
+        dict(name="Redmi Note 13 Pro",                 category="electronics", price=26999,  discount=0,  stock=80,  rating=4.6, reviews=5600,  is_featured=True,  image="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400"),
+        dict(name="Apple iPad 10th Generation",        category="electronics", price=59900,  discount=5,  stock=40,  rating=4.8, reviews=2100,  is_featured=True,  image="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400"),
+        dict(name="Fire-Boltt Ninja Smartwatch",       category="electronics", price=1499,   discount=20, stock=300, rating=4.4, reviews=12000, is_featured=False, image="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400"),
+        dict(name="Fabindia Cotton Kurta Set",         category="clothing",    price=2499,   discount=10, stock=150, rating=4.6, reviews=3400,  is_featured=True,  image="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=400"),
+        dict(name="Biba Anarkali Suit",                category="clothing",    price=3299,   discount=0,  stock=100, rating=4.5, reviews=2200,  is_featured=False, image="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400"),
+        dict(name="Raymond Regular Fit Shirt",         category="clothing",    price=1799,   discount=0,  stock=200, rating=4.4, reviews=1800,  is_featured=False, image="https://images.unsplash.com/photo-1603252109303-2751441dd157?w=400"),
+        dict(name="Jockey Mens T-Shirt Pack of 3",     category="clothing",    price=999,    discount=15, stock=400, rating=4.3, reviews=9800,  is_featured=False, image="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400"),
+        dict(name="Wings of Fire APJ Abdul Kalam",     category="books",       price=199,    discount=0,  stock=500, rating=4.9, reviews=25000, is_featured=False, image="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400"),
+        dict(name="The 3 Mistakes of My Life",         category="books",       price=249,    discount=10, stock=400, rating=4.7, reviews=18000, is_featured=False, image="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400"),
+        dict(name="Rich Dad Poor Dad",                 category="books",       price=299,    discount=0,  stock=600, rating=4.8, reviews=32000, is_featured=False, image="https://images.unsplash.com/photo-1589998059171-988d887df646?w=400"),
+        dict(name="Atomic Habits",                     category="books",       price=349,    discount=5,  stock=300, rating=4.9, reviews=28000, is_featured=False, image="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400"),
+        dict(name="Prestige Electric Pressure Cooker", category="home-garden", price=3499,   discount=10, stock=75,  rating=4.7, reviews=6700,  is_featured=False, image="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400"),
+        dict(name="Bajaj 45L Tower Air Cooler",        category="home-garden", price=11999,  discount=15, stock=40,  rating=4.5, reviews=3200,  is_featured=False, image="https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=400"),
+        dict(name="Nivia Pro Yoga Mat",                category="sports",      price=899,    discount=0,  stock=150, rating=4.5, reviews=4500,  is_featured=False, image="https://images.unsplash.com/photo-1601925228792-8a0a21e49bef?w=400"),
+        dict(name="SG Scorer Cricket Bat",             category="sports",      price=2199,   discount=0,  stock=80,  rating=4.6, reviews=2800,  is_featured=False, image="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400"),
+        dict(name="Mamaearth Ubtan Face Wash",         category="beauty",      price=299,    discount=10, stock=800, rating=4.7, reviews=15000, is_featured=False, image="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400"),
+        dict(name="Biotique Bio Sunscreen SPF 40",     category="beauty",      price=199,    discount=0,  stock=600, rating=4.5, reviews=9200,  is_featured=False, image="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400"),
+    ]
+
+    products = []
+    for p in products_data:
+        slug = p['name'].lower()
+        slug = ''.join(c if c.isalnum() or c == ' ' else ' ' for c in slug)
+        slug = '-'.join(slug.split())
+
+        product = Product(
+            name           = p['name'],
+            slug           = slug,
+            description    = f"Premium quality {p['name']}. Trusted by millions of Indian customers. Comes with manufacturer warranty and excellent customer support.",
+            price          = p['price'],
+            discount       = p['discount'],
+            stock          = p['stock'],
+            rating         = p['rating'],
+            reviews        = p['reviews'],
+            sold           = p['reviews'] // 3,
+            image          = p['image'],
+            images         = [p['image']],
+            category       = p['category'],
+            category_id    = cat_id(p['category']),
+            tags           = [p['category'], 'popular'],
+            specifications = {
+                'Brand':    p['name'].split(' ')[0],
+                'Category': p['category'],
+                'Warranty': '1 Year',
+                'In Stock': 'Yes' if p['stock'] > 0 else 'No',
+            },
+            is_featured = p.get('is_featured', False),
+            is_new      = False,
+            is_active   = True,
+        )
+        products.append(product)
+
+    db.add_all(products)
+    db.commit()
+
+    # Update category counts
+    for cat in db.query(Category).all():
+        count = db.query(Product).filter(Product.category == cat.slug).count()
+        cat.product_count = count
+    db.commit()
+
+    print(f"   ✅ {len(products)} products created.")
+
+
+def seed_orders():
+    print("\n🌱 Seeding sample orders...")
+    if db.query(Order).first():
+        print("   ⚠️  Orders already exist, skipping.")
+        return
+
+    priya   = db.query(User).filter(User.email == "user1@gmail.com").first()
+    address = db.query(Address).filter(
+        Address.user_id    == priya.id,
+        Address.is_default == True
+    ).first()
+    galaxy  = db.query(Product).filter(Product.name == "Samsung Galaxy S24 Ultra").first()
+    boat    = db.query(Product).filter(Product.name == "boAt Rockerz 550 Headphones").first()
+    kurta   = db.query(Product).filter(Product.name == "Fabindia Cotton Kurta Set").first()
+
+    if not all([priya, address, galaxy, boat, kurta]):
+        print("   ❌ Required data not found, skipping orders.")
+        return
+
+    address_snapshot = {
+        "full_name": address.full_name,
+        "street":    address.street,
+        "city":      address.city,
+        "state":     address.state,
+        "zip":       address.zip,
+        "country":   address.country,
+    }
+
+    order1 = Order(
+        order_number   = "ORD-2024-000001",
+        user_id        = priya.id,
+        status         = "delivered",
+        subtotal       = 131998,
+        shipping       = 0,
+        tax            = 23759,
+        total          = 155757,
+        payment_method = "UPI",
+        payment_status = "paid",
+        address        = address_snapshot,
+        tracking       = [
+            {"status": "Order Placed",     "date": "2024-12-01T10:30:00Z", "done": True},
+            {"status": "Processing",       "date": "2024-12-01T14:00:00Z", "done": True},
+            {"status": "Shipped",          "date": "2024-12-02T09:00:00Z", "done": True},
+            {"status": "Out for Delivery", "date": "2024-12-03T08:00:00Z", "done": True},
+            {"status": "Delivered",        "date": "2024-12-03T14:00:00Z", "done": True},
+        ],
+        items = [
+            OrderItem(product_id=galaxy.id, name=galaxy.name, price=galaxy.price, quantity=1, image=galaxy.image),
+            OrderItem(product_id=boat.id,   name=boat.name,   price=boat.price,   quantity=1, image=boat.image),
+        ]
+    )
+
+    order2 = Order(
+        order_number   = "ORD-2024-000002",
+        user_id        = priya.id,
+        status         = "shipped",
+        subtotal       = 4998,
+        shipping       = 99,
+        tax            = 899,
+        total          = 5996,
+        payment_method = "Net Banking",
+        payment_status = "paid",
+        address        = address_snapshot,
+        tracking       = [
+            {"status": "Order Placed",     "date": "2024-12-10T15:00:00Z", "done": True},
+            {"status": "Processing",       "date": "2024-12-10T18:00:00Z", "done": True},
+            {"status": "Shipped",          "date": "2024-12-11T10:00:00Z", "done": True},
+            {"status": "Out for Delivery", "date": None,                   "done": False},
+            {"status": "Delivered",        "date": None,                   "done": False},
+        ],
+        items = [
+            OrderItem(product_id=kurta.id, name=kurta.name, price=kurta.price, quantity=2, image=kurta.image),
+        ]
+    )
+
+    db.add_all([order1, order2])
+    db.commit()
+    print("   ✅ 2 sample orders created.")
+
+
+# ── Main ──────────────────────────────────────────────────────────────────────
+print("\n🚀 Starting database seeding...\n")
+try:
+    seed_users()
+    seed_categories()
+    seed_addresses()
+    seed_products()
+    seed_orders()
+    print("\n✅ Database seeded successfully!")
+    print("\n" + "─" * 42)
+    print("  Credentials")
+    print("─" * 42)
+    print("  Admin → admin@shopelite.in  / Admin@123")
+    print("  User  → user1@gmail.com   / Priya@123")
+    print("  User  → user2@gmail.com   / Arjun@123")
+    print("─" * 42 + "\n")
+except Exception as e:
+    db.rollback()
+    print(f"\n❌ Seeding failed!")
+    print(f"   Error: {e}")
+    import traceback
+    traceback.print_exc()
+finally:
+    db.close()
+</file>
+
+<file path="main.py">
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.core.config import settings
+from app.core.database import Base, engine
+from app.api.routes import auth, products, orders, users
+
+# Create all tables
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(
+    title=settings.APP_NAME,
+    version="1.0.0",
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
+)
+
+# CORS — allow React frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://shopelite-frontend.vercel.app",
+    ],
+    allow_origin_regex=r"http://localhost:\d+",
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(auth.router,     prefix=settings.API_V1_STR)
+app.include_router(products.router, prefix=settings.API_V1_STR)
+app.include_router(orders.router,   prefix=settings.API_V1_STR)
+app.include_router(users.router,    prefix=settings.API_V1_STR)
+
+@app.get("/")
+def root():
+    return {"message": "ShopElite API is running 🚀"}
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+</file>
+
+</files>
