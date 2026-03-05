@@ -5,11 +5,13 @@ import enum
 from app.core.database import Base
 
 class OrderStatus(str, enum.Enum):
-    pending    = "pending"
-    processing = "processing"
-    shipped    = "shipped"
-    delivered  = "delivered"
-    cancelled  = "cancelled"
+    pending          = "pending" 
+    order_placed     = "order_placed"
+    processing       = "processing"
+    shipped          = "shipped"
+    out_for_delivery = "out_for_delivery"
+    delivered        = "delivered"
+    cancelled        = "cancelled"
 
 class Order(Base):
     __tablename__ = "orders"
